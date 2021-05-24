@@ -26,40 +26,36 @@ export const Spotify = {
         }
     },
 
-    search(term){
-        alert("sending a call to Spotify");
+     search(term){
+        //alert("sending a call to Spotify");
         const accessToken = Spotify.getAccessToken();
         let url = `https://api.spotify.com/v1/search?type=track&q=${term}`;
 
-        fetch(url, {
+        return fetch(url, {
             headers: {
                 'Authorization': 'Bearer ' + accessToken
             },
         }).then(response => {
-            alert("we got a response");
-            
-            if (response.ok){
-                
+            if (response.ok){ 
                 return response.json();
             }
         }).then(jsonResponse => {
-            console.log(jsonResponse);
-            if(!jsonResponse.track){
+
+            if(!jsonResponse.tracks){
                 return [];
             } else {
                 
-                return jsonResponse.tracks.items.map(track => ({
-                    id: track.id,
+                let array = jsonResponse.tracks.items.map(track => {return {
                     name: track.name,
                     artist: track.artists[0].name,
                     album: track.album.name,
+ 		            id: track.id,
                     uri: track.uri
-                }
-                
-                ));
+                }}); 
+                return array;
             }
 
-        })
+        });
     }
 
 };
