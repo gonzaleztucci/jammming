@@ -12,8 +12,8 @@ class App extends React.Component{
 
     this.state = {
       searchResults: [{name:'Basket Case', artist: 'Green Day', album: 'Dookie', id:'1', uri:'lksdfjlkjsdk'}, {name:'Bullion', artist: 'Millencolin', album: 'Life on a Plate', id:'2', uri:'lñaskjfeilkjs'}, {name:'In Bloom', artist: 'Nirvana', album: 'Nevermind', id:'3', uri:'weoirweporisdkj'}],
-      playlistName: 'Punk',
-      playlistTracks: [{name:'Basket Case', artist: 'Green Day', album: 'Dookie', id:'1', uri:'lksdfjlkjsdk'}]
+      playlistName: 'New Playlist',
+      playlistTracks: []
 
     };
     this.addTrack = this.addTrack.bind(this);

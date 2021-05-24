@@ -69,31 +69,33 @@ export const Spotify = {
             'Authorization': 'Bearer ' + accessToken
         };
 
-        let url = `https://api.spotify.com/v1/me`;
-        let urlPlaylist = `https://api.spotify.com/v1/users/${userID}/playlists`;
-        
+       
 
-        return fetch(url, {headers:headers}).then(response => {
+        return fetch(`https://api.spotify.com/v1/me`, {
+            headers:headers
+        }).then(response => {
             if(response.ok){
                 let jsonResponse = response.json();
                 return jsonResponse
-            }
+            } 
+            throw new Error('Request failed!');
         }).then(jsonResponse => {          
             userID = jsonResponse.id;
-            return fetch(urlPlaylist, {
+            return fetch(`https://api.spotify.com/v1/users/${userID}/playlists`, {
                 headers: headers,
                 method: 'POST',
                 body: JSON.stringify({name:name})
+                
             });
         }).then(playlistId => {
-            return fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
+            return fetch(`https://api.spotify.com/v1/users/${userID}/playlists/${playlistId}/tracks`, {
                 headers: headers,
                 method: 'POST',
                 body: trackURIs
             });
         }).then(response => {
             let jsonResponse = response.json();
-            playlistId = jsonResponse.id;
+            let playlistId = jsonResponse.id;
         });
 
     }
