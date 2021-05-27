@@ -92,7 +92,6 @@ export const Spotify = {
         }
 
         const accessToken = Spotify.getAccessToken();
-        let userID;
         let playlistId
         let headers = {
             'Authorization': 'Bearer ' + accessToken
@@ -100,27 +99,14 @@ export const Spotify = {
 
        
 
-        return fetch(`https://api.spotify.com/v1/me`, {
-            headers:headers
-        }).then(response => {
-            if(response.ok){
-                let jsonResponse = response.json();
-                return jsonResponse
-            } 
-        }).then(jsonResponse => {          
-            userID = jsonResponse.id;
-            return fetch(`https://api.spotify.com/v1/users/${userID}/playlists`, {
+        return fetch(`https://api.spotify.com/v1/users/${userID}/playlists`, {
                 headers: headers,
                 method: 'POST',
                 'Content-type': 'application/json',
                 body: JSON.stringify({name:name})
-            });
         }).then(response => {
             let jsonResponse = response.json();
-
-            return jsonResponse;
-
-        
+            return jsonResponse;        
         }).then(jsonResponse => {
             console.log("Los URI´s a pasar:");
             console.log(trackURIs);
@@ -135,6 +121,8 @@ export const Spotify = {
                 let jsonResponse = response.json();
                 let playlistId = jsonResponse.id;
         });
+
+        //// aqui se cierra
 
     },
 
