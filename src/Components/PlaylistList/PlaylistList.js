@@ -7,10 +7,18 @@ export class PlaylistList extends React.Component{
     render(){
         return(
             <div className="PlaylistList">
-                <h2>Your Playlists</h2>
-                //Will map the userPlaylists render a PlaylistItem for each element of the user's playlist
-                //Falta implementar el map
-                <PlaylistItem playlistName = {} />
+                <h2>User Playlists</h2>
+
+                {
+                    {/* this.props.userPlaylists.map(playlist => {
+                        return <PlaylistItem playlistName= {playlist.name} key= {playlist.id} />
+                    }) */}
+                }
+
+                {/* //Will map the userPlaylists render a PlaylistItem for each element of the user's playlist
+                //Falta implementar el map */}
+                {/* <PlaylistItem  /> */}
+                {/* ESTO ES UN PROP   playlistName = {} */}
             </div>
         )
     }

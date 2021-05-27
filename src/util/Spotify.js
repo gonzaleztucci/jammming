@@ -1,6 +1,7 @@
 let accessToken;
 const clientID = 'c1460e19ebe0417aa1a395c41fe4b6e8';
 const redirectURI = 'http://localhost:3000/';
+let userID; 
 
 export const Spotify = {
 
@@ -23,6 +24,23 @@ export const Spotify = {
             let accessURL = `https://accounts.spotify.com/authorize?client_id=${clientID}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirectURI}`;
             window.location = accessURL;
         }
+    },
+
+    getUserID(){
+
+        return fetch(`https://api.spotify.com/v1/me`, {
+            headers: {
+                'Authorization': 'Bearer ' + accessToken
+            }}).then(response => {
+            if(response.ok){
+                let jsonResponse = response.json();
+                return jsonResponse
+            } 
+        }).then(jsonResponse => {          
+            userID = jsonResponse.id;
+            return userID;
+        })
+
     },
 
      search(term){
@@ -114,18 +132,36 @@ export const Spotify = {
                 body: JSON.stringify({ uris: trackURIs}) 
             });
         }).then(response => {
-            
                 let jsonResponse = response.json();
                 let playlistId = jsonResponse.id;
-
-             
-
         });
 
     },
 
-    
+    getUserPlaylists(){
 
+        const accessToken = Spotify.getAccessToken();
+
+        let headers = {
+            'Authorization': 'Bearer ' + accessToken
+        };
+
+        return fetch('https://api.spotify.com/v1/me/playlists', {
+            headers: headers,
+            
+        }).then(response => {
+            let jsonResponse = response.json();
+            return jsonResponse;
+        }).then(jsonResponse => {
+            let fullArray = jsonResponse.items;
+            let userPlaylists = fullArray.filter(playlist => playlist.owner.id === userID);
+            console.log(fullArray);
+            console.log(userPlaylists);
+            return userPlaylists;
+        });
+    },
+
+    
 };
 
 

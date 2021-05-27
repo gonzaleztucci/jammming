@@ -1,7 +1,12 @@
 import React from 'react';
-import './PlaylistItem';
+import './PlaylistItem.css';
 
 export class PlaylistItem extends React.Component{
+
+
+    handleClick(){
+        
+    }
 
     render(){
         return(
