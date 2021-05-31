@@ -18,12 +18,14 @@ class App extends React.Component{
       userPlaylists: []
 
     };
+
     this.addTrack = this.addTrack.bind(this);
     this.removeTrack = this.removeTrack.bind(this);
     this.updatePlaylistName = this.updatePlaylistName.bind(this);
     this.savePlaylist = this.savePlaylist.bind(this);
     this.search = this.search.bind(this);
     this.loadPlaylists = this.loadPlaylists.bind(this);
+    this.changePlaylistName = this.changePlaylistName.bind(this);
   }
 
   addTrack(track){
@@ -39,6 +41,11 @@ class App extends React.Component{
     this.setState({playlistTracks: newTrackList});
     
    
+  }
+
+  changePlaylistName(name){
+    this.setState({playlistName: name});
+
   }
 
   removeTrack(track){
@@ -108,7 +115,7 @@ class App extends React.Component{
               {console.log(this.state.searchResults)} */}
               <SearchResults className="search-results" searchResults = {this.state.searchResults} onAdd={this.addTrack}/>
               <div className='playlist-edit'>
-                  <PlaylistList playlists={this.state.userPlaylists} onSelect={this.addTrack}/>
+                  <PlaylistList playlists={this.state.userPlaylists} onSelect={this.addTrack} onPlaylistChange={this.changePlaylistName} onNameChange = {this.updatePlaylistName}/>
                   <Playlist playlistName={this.state.playlistName} playlistTracks={this.state.playlistTracks} onRemove={this.removeTrack} onNameChange = {this.updatePlaylistName} onSave = {this.savePlaylist}/>
               </div>
               

@@ -17,11 +17,11 @@ export class PlaylistItem extends React.Component{
         console.log("voy con el array");
         console.log(playlistId);
         Spotify.getPlaylist(playlistId).then(response => {
-            // response.map(track => {
-            //     this.onSelect(track);
-            console.log(response);
+
             response.map(track => {this.props.onSelect(track)});
-            })
+            });
+            this.props.onPlaylistChange(this.props.playlistName);
+           
         }
         
                
