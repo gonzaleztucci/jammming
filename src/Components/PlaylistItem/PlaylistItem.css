@@ -8,5 +8,6 @@
 .PlaylistItem:hover{
     
     background-color: rgba(2, 10, 44, 0.5);
+    cursor:pointer;
 }
 

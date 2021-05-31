@@ -1,19 +1,39 @@
 import React from 'react';
+import { Spotify } from '../../util/Spotify';
 import './PlaylistItem.css';
 
 export class PlaylistItem extends React.Component{
+    constructor(props){
+        super(props);
 
+        this.handleClick = this.handleClick.bind(this);
 
-    handleClick(){
-        
     }
 
-    render(){
+
+    handleClick(e){
+
+        let playlistId = this.props.playlist.id;
+        console.log("voy con el array");
+        console.log(playlistId);
+        Spotify.getPlaylist(playlistId).then(response => {
+            // response.map(track => {
+            //     this.onSelect(track);
+            console.log(response);
+            response.map(track => {this.props.onSelect(track)});
+            })
+        }
+        
+               
+
+    
+
+    render() {
         return(
             //will print the name from the props passed to the component.
             <div className='PlaylistItem'>
 
-                <h3>{this.props.playlistName}</h3>
+                <h3 onClick={this.handleClick}>{this.props.playlistName}</h3>
 
             </div>
             

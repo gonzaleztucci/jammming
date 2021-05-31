@@ -122,7 +122,7 @@ export const Spotify = {
                 let playlistId = jsonResponse.id;
         });
 
-        //// aqui se cierra
+       
 
     },
 
@@ -148,6 +148,45 @@ export const Spotify = {
             return userPlaylists;
         });
     },
+
+    getPlaylist(playlistId){
+        let headers = {
+            'Authorization': 'Bearer ' + accessToken
+        };
+
+
+        // return fetch(`https://api.spotify.com/v1/playlists/${playlistId}`, {headers: headers})
+        // .then(response => {
+        //     return response.json()
+        // }).then(jsonResponse => {
+        //     return jsonResponse.tracks.items;
+        // }).then(jsonResponse => {
+        //     let items = jsonResponse;
+        //     let tracks = items.map(item => {
+        //         // console.log(item.track);
+        //         return item.track;
+        //     })
+        //     return tracks;
+        // });
+
+        return fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {headers: headers}).then(
+            response => {
+            let jsonResponse = response.json();
+            return jsonResponse}).then(
+            jsonResponse => {
+            let array = jsonResponse.items.map(item => {return {
+                name: item.track.name,
+                artist: item.track.artists[0].name,
+                album: item.track.album.name,
+ 		        id: item.track.id,
+                uri: item.track.uri
+            }
+            });
+
+            return array;
+
+        })
+    }
 
     
 };

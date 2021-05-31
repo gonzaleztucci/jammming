@@ -32,9 +32,13 @@ class App extends React.Component{
       return;
     }
 
-    let newTrackList = this.state.playlistTracks.push(track);
-    this.setState({newTrackList});
-  
+    let newTrackList = this.state.playlistTracks;
+    newTrackList.push(track);
+    console.log(newTrackList);
+    console.log(typeof newTrackList);
+    this.setState({playlistTracks: newTrackList});
+    
+   
   }
 
   removeTrack(track){
@@ -104,7 +108,7 @@ class App extends React.Component{
               {console.log(this.state.searchResults)} */}
               <SearchResults className="search-results" searchResults = {this.state.searchResults} onAdd={this.addTrack}/>
               <div className='playlist-edit'>
-                  <PlaylistList playlists={this.state.userPlaylists}/>
+                  <PlaylistList playlists={this.state.userPlaylists} onSelect={this.addTrack}/>
                   <Playlist playlistName={this.state.playlistName} playlistTracks={this.state.playlistTracks} onRemove={this.removeTrack} onNameChange = {this.updatePlaylistName} onSave = {this.savePlaylist}/>
               </div>
               
