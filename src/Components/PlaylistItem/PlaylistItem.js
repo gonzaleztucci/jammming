@@ -13,6 +13,7 @@ export class PlaylistItem extends React.Component{
 
     handleClick(e){
 
+        this.props.onSwitchPlaylist();
         let playlistId = this.props.playlist.id;
         console.log("voy con el array");
         console.log(playlistId);
