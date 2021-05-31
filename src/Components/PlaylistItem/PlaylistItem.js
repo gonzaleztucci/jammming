@@ -15,6 +15,7 @@ export class PlaylistItem extends React.Component{
 
         this.props.onSwitchPlaylist();
         let playlistId = this.props.playlist.id;
+        this.props.onRefresh(playlistId);
         console.log("voy con el array");
         console.log(playlistId);
         Spotify.getPlaylist(playlistId).then(response => {

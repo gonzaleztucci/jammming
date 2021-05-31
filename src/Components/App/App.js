@@ -15,8 +15,9 @@ class App extends React.Component{
       searchResults: [],
       playlistName: 'New Playlist',
       playlistTracks: [],
-      userPlaylists: []
-
+      userPlaylists: [],
+      selectedPlaylistID: '',
+      newPlaylist: true
     };
 
     this.addTrack = this.addTrack.bind(this);
@@ -27,6 +28,7 @@ class App extends React.Component{
     this.loadPlaylists = this.loadPlaylists.bind(this);
     this.changePlaylistName = this.changePlaylistName.bind(this);
     this.clearPlaylist = this.clearPlaylist.bind(this);
+    this.updatePlaylistID = this.updatePlaylistID.bind(this);
   }
 
   addTrack(track){
@@ -37,8 +39,6 @@ class App extends React.Component{
 
     let newTrackList = this.state.playlistTracks;
     newTrackList.push(track);
-    console.log(newTrackList);
-    console.log(typeof newTrackList);
     this.setState({playlistTracks: newTrackList});
     
    
@@ -54,6 +54,7 @@ class App extends React.Component{
     if (!this.state.playlistTracks.find(savedTrack => savedTrack.id === track.id)) {
       return;
     }
+
     // Adds de current playlist state to trackList and removes item with index
     let trackList = this.state.playlistTracks;
     let index = trackList.findIndex(savedTrack => savedTrack.id === track.id);
@@ -61,6 +62,10 @@ class App extends React.Component{
 
     //Sets new trackList
     this.setState({trackList});
+
+    if(!this.state.playlistStatus){
+      Spotify.deleteTrack(this.state.selectedPlaylistID, track);
+    }
   
   }
 
@@ -84,13 +89,17 @@ class App extends React.Component{
 
   savePlaylist(){
         const trackURIs = this.state.playlistTracks.map(track => {return track.uri});
-        Spotify.savePlaylist(this.state.playlistName, trackURIs).then(
+        Spotify.savePlaylist(this.state.playlistName, trackURIs, this.state.selectedPlaylistID).then(
           this.setState({
             playlistName: 'New Playlist',
             playlistTracks: []
           })
-        ); 
+        )
     
+  }
+
+  updatePlaylistID(ID){
+    this.setState({selectedPlaylistID: ID});
   }
 
     search(term){
@@ -120,8 +129,8 @@ class App extends React.Component{
               {console.log(this.state.searchResults)} */}
               <SearchResults className="search-results" searchResults = {this.state.searchResults} onAdd={this.addTrack}/>
               <div className='playlist-edit'>
-                  <PlaylistList playlists={this.state.userPlaylists} onSelect={this.addTrack} onPlaylistChange={this.changePlaylistName} onNameChange = {this.updatePlaylistName} onSwitchPlaylist={this.clearPlaylist}/>
-                  <Playlist playlistName={this.state.playlistName} playlistTracks={this.state.playlistTracks} onRemove={this.removeTrack} onNameChange = {this.updatePlaylistName} onSave = {this.savePlaylist}/>
+                  <PlaylistList playlists={this.state.userPlaylists} onRefresh={this.updatePlaylistID} onSelect={this.addTrack} onPlaylistChange={this.changePlaylistName} onNameChange = {this.updatePlaylistName} onSwitchPlaylist={this.clearPlaylist}/>
+                  <Playlist playlistName={this.state.playlistName} playlistTracks={this.state.playlistTracks} playlistStatus= {this.state.newPlaylist} onRemove={this.removeTrack} onNameChange = {this.updatePlaylistName} onSave = {this.savePlaylist} />
               </div>
               
             </div>

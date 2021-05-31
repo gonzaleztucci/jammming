@@ -4,6 +4,8 @@ import './PlaylistList.css';
 
 export class PlaylistList extends React.Component{
 
+
+
     render(){
         return(
 
@@ -11,7 +13,7 @@ export class PlaylistList extends React.Component{
                 <h2>User Playlists</h2>
                 {
                 this.props.playlists.map(playlist => {
-                    return <PlaylistItem playlist ={playlist} playlistName= {playlist.name} key= {playlist.id} onSelect={this.props.onSelect} onPlaylistChange={this.props.onPlaylistChange} onNameChange = {this.props.onNameChange} onSwitchPlaylist={this.props.onSwitchPlaylist}/>
+                    return <PlaylistItem playlist ={playlist} playlistName= {playlist.name} playlistStatus={this.props.playlistStatus} key= {playlist.id} onRefresh={this.props.onRefresh} onSelect={this.props.onSelect} onPlaylistChange={this.props.onPlaylistChange} onNameChange = {this.props.onNameChange} onSwitchPlaylist={this.props.onSwitchPlaylist}/>
                 })
             }
             </div>          

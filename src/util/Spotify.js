@@ -86,10 +86,10 @@ export const Spotify = {
         });
     },
 
-    savePlaylist(name, trackURIs){
+    savePlaylist(name, trackURIs, playlistID){
         if(!name || !trackURIs.length){
             return;
-        }
+        }       
 
         const accessToken = Spotify.getAccessToken();
         let playlistId
@@ -97,9 +97,8 @@ export const Spotify = {
             'Authorization': 'Bearer ' + accessToken
         };
 
-       
-
-        return fetch(`https://api.spotify.com/v1/users/${userID}/playlists`, {
+        if(!playlistID){
+            return fetch(`https://api.spotify.com/v1/users/${userID}/playlists`, {
                 headers: headers,
                 method: 'POST',
                 'Content-type': 'application/json',
@@ -120,9 +119,10 @@ export const Spotify = {
         }).then(response => {
                 let jsonResponse = response.json();
                 let playlistId = jsonResponse.id;
-        });
-
-       
+        }); 
+        } else {
+            return; 
+        }
 
     },
 
@@ -171,6 +171,29 @@ export const Spotify = {
             return array;
 
         })
+    }, 
+
+    deleteTrack(playlistId, track){
+        let headers = {
+            'Authorization': 'Bearer ' + accessToken,
+            'Content-Type': 'application/json',
+        };
+
+        let trackURI = track.uri;
+        let bodyText = JSON.stringify({tracks:{uri: trackURI}})
+        console.log(trackURI);
+        console.log(bodyText);
+
+        fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`,{
+            method: 'DELETE',
+            headers: headers,
+            body: JSON.stringify({tracks:[{uri: trackURI}]}),
+        }).then(response => {
+            let jsonResponse = response.json()
+            console.log("la respuesta es --->  "+ jsonResponse);
+            return jsonResponse;
+        })
+
     }
 
     
