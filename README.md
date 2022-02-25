@@ -5,14 +5,14 @@ Jammming allows you to search for songs in Spotify and create playlists that are
 
 App was built using Create-React-App and the CSS was provided as on a starter pack.
 
-Apart of the React implementation an important objective for this project was to learn how to interact with the Spotify API. 
+Apart of the React implementation an important objective for this project was to learn how to interact with the Spotify API and publishing it to Netlify. 
 
 1. Clone the project
 2. Run `npm install` in order to get all dependencies
 ```
 npm install
 ```
-4. Run `npm run start` to launch the React app
+4. Run `npm start` on your terminal to launch the React app
 ```
 npm start
 ```
